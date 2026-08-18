@@ -1,5 +1,7 @@
 # DocAI OCR Editor
 
+**Live app:** https://blueturtle-ai-labs.github.io/DocAI-OCR-Corrector/
+
 A single-page HTML tool for reviewing and editing Google Document AI OCR output. No frameworks, no build step — just `index.html`, `styles.css`, and `app.js`.
 
 Served via a local Python HTTP server during development (`python -m http.server`) and hosted on GitHub Pages in production. No `file://` compatibility is needed or targeted.
