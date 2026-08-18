@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DocAI OCR Editor</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header id="toolbar">
+  <div class="tb-group brand-group">
+    <span class="brand">DocAI OCR Editor</span>
+  </div>
+
+  <div class="tb-group">
+    <button id="openBtn" class="btn">Open File</button>
+    <input id="fileInput" type="file" accept=".json,application/json" hidden />
+    <span id="fileName" class="filename">No file loaded</span>
+  </div>
+
+  <div class="tb-group" id="pageNavGroup" hidden>
+    <button id="prevPageBtn" class="btn icon-btn" title="Previous page">&larr;</button>
+    <select id="pageSelect"></select>
+    <button id="nextPageBtn" class="btn icon-btn" title="Next page">&rarr;</button>
+  </div>
+
+  <div class="tb-group" id="granularityGroup" hidden>
+    <label class="gran-toggle" data-gran="block">
+      <input type="checkbox" id="showBlock" />
+      <span class="swatch swatch-block"></span>Block
+    </label>
+    <label class="gran-toggle" data-gran="paragraph">
+      <input type="checkbox" id="showParagraph" />
+      <span class="swatch swatch-paragraph"></span>Paragraph
+    </label>
+    <label class="gran-toggle" data-gran="line">
+      <input type="checkbox" id="showLine" checked />
+      <span class="swatch swatch-line"></span>Line
+    </label>
+    <label class="gran-toggle" data-gran="token">
+      <input type="checkbox" id="showToken" checked />
+      <span class="swatch swatch-token"></span>Token
+    </label>
+    <label class="gran-toggle discard-toggle">
+      <input type="checkbox" id="showDiscarded" checked />
+      <span class="swatch swatch-discarded"></span>Discarded
+    </label>
+  </div>
+
+  <div class="tb-group tb-right" id="exportGroup" hidden>
+    <span id="statsLabel" class="stats-label"></span>
+    <button id="exportBtn" class="btn btn-primary">Export JSON</button>
+  </div>
+</header>
+
+<div id="brushSizeControl" class="brush-size-control" hidden>
+  <span id="brushSizeLabel" class="brush-size-label">16px</span>
+  <input type="range" id="brushSizeSlider" min="4" max="50" value="16" step="1" orient="vertical" aria-label="Brush size" />
+</div>
+
+<main id="mainArea">
+  <section id="canvasArea">
+    <div id="emptyState" role="button" tabindex="0">
+      <p><strong>Drop a Document AI OCR JSON file here</strong></p>
+      <p class="hint">or click here, or use the "Open File" button above</p>
+    </div>
+    <div id="pageWrap" class="page-wrap" hidden>
+      <img id="pageImg" alt="OCR page" draggable="false" />
+      <svg id="pageSvg" viewBox="0 0 1 1" preserveAspectRatio="none"></svg>
+      <div id="brushCursor" class="brush-cursor" hidden></div>
+    </div>
+  </section>
+
+  <aside id="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-header">
+        <h2>Discarded</h2>
+        <button id="restoreAllBtn" class="btn btn-small" disabled>Restore All</button>
+      </div>
+      <div id="discardedList" class="discarded-list">
+        <p class="empty-hint">Nothing discarded yet.</p>
+      </div>
+    </div>
+    <div class="sidebar-section shortcuts">
+      <h2>Shortcuts</h2>
+      <ul>
+        <li><kbd>Click</kbd> select box</li>
+        <li><kbd>Shift/Ctrl</kbd>+<kbd>Click</kbd> multi-select</li>
+        <li>Drag &mdash; brush-select multiple boxes</li>
+        <li><kbd>Delete</kbd> discard selection</li>
+        <li><kbd>Ctrl</kbd>+<kbd>Z</kbd> undo last discard</li>
+        <li><kbd>Esc</kbd> clear selection</li>
+        <li><kbd>&larr;</kbd>/<kbd>&rarr;</kbd> previous/next page</li>
+        <li>Click a discarded (dashed) box &mdash; restore it</li>
+      </ul>
+    </div>
+  </aside>
+</main>
+
+<div id="toast" class="toast" hidden></div>
+
+<script src="app.js"></script>
+</body>
+</html>
